@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/27 12:01:35 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/04/29 12:26:04 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	int		pipfd[2];
+	int		cmd_n;
 	pid_t	pid1;
 	pid_t	pid2;
 
@@ -22,6 +23,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (pipe(pipfd) == -1)
 			error_out("pipe");
+		cmd_n = argc - 2;
+		while()
 		pid1 = fork();
 		if (pid1 == 0)
 			manage_child(argc, argv, pipfd);
