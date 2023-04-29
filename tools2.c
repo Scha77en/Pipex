@@ -6,11 +6,12 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/23 16:58:37 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/04/29 13:12:47 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+#include "pipex_bonus.h"
 
 char	*ft_strjoin(char *s1, char *s2)
 {

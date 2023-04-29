@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/19 22:48:59 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/29 14:13:54 by aouhbi           ###   ########.fr       */
+/*   Created: 2023/04/29 13:13:03 by aouhbi            #+#    #+#             */
+/*   Updated: 2023/04/29 13:14:16 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef PIPEX_BONUS_H
+# define PIPEX_BONUS_H
 
 # include <stdio.h>
 # include <fcntl.h>
@@ -24,8 +24,9 @@
 char	**ft_split(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);
 size_t	ft_strlen(char *s);
-void	manage_child(char **argv, int *pipfd, char **env);
-void	manage_child2(char **argv, int *pipfd, char **env);
+void	manage_first_child(char **argv, int *pipfd, char **env);
+void	manage_children(char **argv, int *pipfd, char **env, int j);
+void	manage_last_child(char **argv, int *pipfd, char **env, int j);
 int		command_search(char **path);
 void	error_out(char *msg);
 
