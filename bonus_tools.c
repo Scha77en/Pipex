@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/01 16:07:08 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:46:33 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,11 @@ void	manage_heredoc_cmd(char **argv, int *pipfd, char **env, char *data)
 	int		i;
 	int		fd1;
 
-	fd1 = open(argv[1], O_RDONLY);
-	if (fd1 == -1)
-		error_out("open");
-	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
-	if (dup2(data, STDIN_FILENO) < 0)
+	if (dup2(pipfd[0], STDIN_FILENO) < 0)
 		error_out("dup2");
-	cmd = ft_split(argv[2], ' ');
+	cmd = ft_split(argv[3], ' ');
 	path = ft_split(env[6], ':');
 	i = -1;
 	while (path[++i])
@@ -58,6 +54,20 @@ int	command_handler_heredoc(int argc, char **argv, int *pipfd, char **env)
 		cmd_n--;
 	}
 	return (j);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
 }
 
 int	command_search(char **path)

@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/01 16:06:52 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:52:06 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char **argv, char **env)
 	{
 		if (pipe(pipfd) == -1)
 			error_out("pipe");
-		if (argv[1] == "here_doc")
-			here_doc_management(argc, argv, pipfd, env);
+		if (ft_strcmp(argv[1], "here_doc") == 0)
+			here_doc_management(argv, pipfd, env);
 		pid1 = fork();
 		if (pid1 == 0)
 			manage_first_child(argv, pipfd, env);
@@ -41,7 +41,7 @@ int	main(int argc, char **argv, char **env)
 	}
 }
 
-void	here_doc_management(int argc, char **argv, int *pipfd, char **env)
+int	here_doc_management(char **argv, int *pipfd, char **env)
 {
 	char	*line;
 	char	*data;
@@ -57,19 +57,9 @@ void	here_doc_management(int argc, char **argv, int *pipfd, char **env)
 			break ;
 		data = ft_strjoin(data, line);
 	}
-	pid1 = fork();
-	if (pid1 == 0)
-		manage_heredoc_cmd(argv, pipfd, env, data);
-	j = command_handler_heredoc(argc, argv, pipfd, env);
-	pid2 = fork();
-	if (pid2 == 0)
-		manage_last_child(argv, pipfd, env, j);
-	else
-	{
-		wait(0);
-		close(pipfd[1]);
-		close(pipfd[0]);
-	}	
+	write (pipfd[1], data, ft_strlen(data));
+	manage_heredoc_cmd(argv, pipfd, env);
+	return (1);
 }
 
 void	manage_first_child(char **argv, int *pipfd, char **env)
@@ -83,7 +73,6 @@ void	manage_first_child(char **argv, int *pipfd, char **env)
 	fd1 = open(argv[1], O_RDONLY);
 	if (fd1 == -1)
 		error_out("open");
-	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
 	if (dup2(fd1, STDIN_FILENO) < 0)
