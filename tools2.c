@@ -6,12 +6,33 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/29 13:12:47 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/04/30 19:48:57 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 #include "pipex_bonus.h"
+
+int	command_handler(int argc, char **argv, int *pipfd, char **env)
+{
+	int		cmd_n;
+	pid_t	pid_b;
+	int		j;
+
+	cmd_n = argc - 5;
+	j = 3;
+	while (cmd_n > 0)
+	{
+		pid_b = fork();
+		if (pid_b == 0)
+			manage_children(argv, pipfd, env, j);
+		else
+			wait(0);
+		j++;
+		cmd_n--;
+	}
+	return (j);
+}
 
 char	*ft_strjoin(char *s1, char *s2)
 {

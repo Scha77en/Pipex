@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/29 18:08:45 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/01 16:06:52 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,23 @@
 int	main(int argc, char **argv, char **env)
 {
 	int		pipfd[2];
-	int		cmd_n;
 	int		j;
 	pid_t	pid1;
-	pid_t	pid_b;
 	pid_t	pid2;
 
 	if (argc >= 5)
 	{
 		if (pipe(pipfd) == -1)
 			error_out("pipe");
+		if (argv[1] == "here_doc")
+			here_doc_management(argc, argv, pipfd, env);
 		pid1 = fork();
 		if (pid1 == 0)
 			manage_first_child(argv, pipfd, env);
-		cmd_n = argc - 5;
-		j = 3;
-		while (cmd_n > 0)
-		{
-			pid_b = fork();
-			if (pid_b == 0)
-				manage_children(argv, pipfd, env, j);
-			else
-				wait(0);
-			j++;
-			cmd_n--;
-		}
+		j = command_handler(argc, argv, pipfd, env);
 		pid2 = fork();
 		if (pid2 == 0)
-		{
 			manage_last_child(argv, pipfd, env, j);
-		}
 		else
 		{
 			wait(0);
@@ -52,6 +39,37 @@ int	main(int argc, char **argv, char **env)
 			close(pipfd[0]);
 		}
 	}
+}
+
+void	here_doc_management(int argc, char **argv, int *pipfd, char **env)
+{
+	char	*line;
+	char	*data;
+	int		j;
+	pid_t	pid1;
+	pid_t	pid2;
+
+	write(1, "here_doc", 8);
+	while (1)
+	{
+		line = get_next_line(0);
+		if (line == argv[2])
+			break ;
+		data = ft_strjoin(data, line);
+	}
+	pid1 = fork();
+	if (pid1 == 0)
+		manage_heredoc_cmd(argv, pipfd, env, data);
+	j = command_handler_heredoc(argc, argv, pipfd, env);
+	pid2 = fork();
+	if (pid2 == 0)
+		manage_last_child(argv, pipfd, env, j);
+	else
+	{
+		wait(0);
+		close(pipfd[1]);
+		close(pipfd[0]);
+	}	
 }
 
 void	manage_first_child(char **argv, int *pipfd, char **env)
@@ -92,7 +110,6 @@ void	manage_children(char **argv, int *pipfd, char **env, int j)
 		error_out("dup2");
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
-	printf("argv[j] : %s\n", argv[j]);
 	cmd = ft_split(argv[j], ' ');
 	path = ft_split(env[6], ':');
 	i = -1;
@@ -129,23 +146,4 @@ void	manage_last_child(char **argv, int *pipfd, char **env, int j)
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
 		error_out("execve");
-}
-
-int	command_search(char **path)
-{
-	int		i;
-
-	i = -1;
-	while (path[++i])
-	{
-		if (access(path[i], X_OK) == 0)
-			return (i);
-	}
-	return (-1);
-}
-
-void	error_out(char *msg)
-{
-	perror(msg);
-	exit(EXIT_FAILURE);
 }
