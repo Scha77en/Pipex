@@ -6,33 +6,42 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/01 16:46:33 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/07 23:51:11 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
 
-void	manage_heredoc_cmd(char **argv, int *pipfd, char **env, char *data)
+void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 {
 	char	**cmd;
 	char	**path;
+	int		fd;
+	char	*buff;
 	int		ret;
 	int		i;
-	int		fd1;
+	char	*info;
 
-	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
+	info = ".hidden";
+	fd = open(info, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	write (fd, data, ft_strlen(data));
+	if (dup2(fd, STDIN_FILENO) < 0)
 		error_out("dup2");
-	if (dup2(pipfd[0], STDIN_FILENO) < 0)
+	close(pipfd[0]);
+	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[3], ' ');
 	path = ft_split(env[6], ':');
 	i = -1;
 	while (path[++i])
-		path[i] = ft_strjoin(path[i], cmd[0]);
+		path[i] = ft_strjoin_b(path[i], cmd[0]);
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
+	{
+		printf("ENTER\n");
 		error_out("execve");
+	}
 }
 
 int	command_handler_heredoc(int argc, char **argv, int *pipfd, char **env)
@@ -56,7 +65,7 @@ int	command_handler_heredoc(int argc, char **argv, int *pipfd, char **env)
 	return (j);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(char *s1, char *s2)
 {
 	size_t	i;
 
@@ -80,11 +89,25 @@ int	command_search(char **path)
 		if (access(path[i], X_OK) == 0)
 			return (i);
 	}
-	return (-1);
+	perror("Command Not Found");
+	exit(EXIT_FAILURE);
 }
 
-void	error_out(char *msg)
+char	*get_data(char **argv)
 {
-	perror(msg);
-	exit(EXIT_FAILURE);
+	char	*line;
+	char	*data;
+
+	data = malloc(BUFFER_SIZE);
+	while (1)
+	{
+		write(1, "heredoc> ", 10);
+		line = get_next_line(0);
+		if (ft_strcmp_herdoc(line, argv[2]) == 0)
+			break ;
+		data = ft_strjoin(data, line);
+		// printf("%s\n", data);
+		free(line);
+	}
+	return (free(line), data);
 }

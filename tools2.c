@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/30 19:48:57 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/07 23:58:08 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	command_handler(int argc, char **argv, int *pipfd, char **env)
 	return (j);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_b(char *s1, char *s2)
 {
 	char	*ptr;
 	size_t	i;
@@ -63,6 +63,34 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (ptr);
 }
 
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char	*ptr;
+	size_t	i;
+	size_t	j;
+
+	if (!s1 || !s2)
+		return (NULL);
+	i = 0;
+	j = 0;
+	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!ptr)
+		return (0);
+	while (s1[i])
+	{
+		ptr[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		ptr[i] = s2[j];
+		i++;
+		j++;
+	}
+	ptr[i] = '\0';
+	return (ptr);
+}
+
 size_t	ft_strlen(char *s)
 {
 	int	i;
@@ -73,4 +101,20 @@ size_t	ft_strlen(char *s)
 		i++;
 	}
 	return (i);
+}
+
+int	ft_strcmp_herdoc(char *s1, char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] || s2[i])
+	{
+		if (s1[i] == '\n')
+			break ;
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (0);
 }
