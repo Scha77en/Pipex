@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/07 23:51:11 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/09 00:50:48 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,22 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	char	**cmd;
 	char	**path;
 	int		fd;
-	char	*buff;
 	int		ret;
 	int		i;
 	char	*info;
 
-	info = ".hidden";
+	info = "hidden";
 	fd = open(info, O_CREAT | O_RDWR | O_TRUNC, 0777);
+	if (fd == -1)
+		error_out("open");
 	write (fd, data, ft_strlen(data));
-	if (dup2(fd, STDIN_FILENO) < 0)
-		error_out("dup2");
+	fd = open(info, O_RDONLY, 0777);
+	if (fd == -1)
+		error_out("open");
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
+		error_out("dup2");
+	if (dup2(fd, STDIN_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[3], ' ');
 	path = ft_split(env[6], ':');
