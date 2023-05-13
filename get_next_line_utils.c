@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 01:31:52 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/01 16:38:23 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/11 01:08:04 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_list	*ft_lstnew(char *content, ssize_t readed)
 		return (NULL);
 	node1 = (t_list *)malloc(sizeof(t_list));
 	if (!node1)
-		return (free(content),free(node1), NULL);
+		return (free(content), free(node1), NULL);
 	node1 -> next = NULL;
 	node1->content = malloc(readed + 1);
 	if (!node1->content)

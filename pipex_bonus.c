@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/09 00:42:09 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/13 14:47:25 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	manage_first_child(char **argv, int *pipfd, char **env)
 	if (dup2(fd1, STDIN_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[2], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
 		path[i] = ft_strjoin_b(path[i], cmd[0]);
@@ -104,7 +104,7 @@ void	manage_children(char **argv, int *pipfd, char **env, int j)
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[j], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
 		path[i] = ft_strjoin_b(path[i], cmd[0]);
@@ -131,7 +131,7 @@ void	manage_last_child(char **argv, int *pipfd, char **env, int j)
 	if (dup2(fd2, STDOUT_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[j], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
 		path[i] = ft_strjoin_b(path[i], cmd[0]);

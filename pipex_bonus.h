@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:13:03 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/07 21:14:51 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/13 14:42:31 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,10 @@ char	*allocate_to_line(t_list *stash);
 void	ft_lstclear(t_list *lst);
 char	*get_data(char **argv);
 int		ft_strcmp_herdoc(char *s1, char *s2);
+int		writing_data(char *data);
+char	*generate_file(void);
+char	**find_path(char **env);
+int		get_env_path(char **env);
+int		ft_strncmp(char *s1, char *s2, int n);
 
 #endif

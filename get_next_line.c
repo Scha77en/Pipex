@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 01:31:45 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/01 16:38:14 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/13 15:12:49 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*get_next_line(int fd)
 {
 	char			*line;
 	static t_list	*head;
-	
+
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
 		return (NULL);
 	if (!head)
@@ -68,7 +68,6 @@ char	*get_the_line(t_list *head)
 {
 	int		i;
 	int		j;
-	int		len;
 	char	*line;
 
 	i = 0;

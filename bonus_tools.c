@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/09 00:50:48 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/13 14:43:28 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,15 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	int		fd;
 	int		ret;
 	int		i;
-	char	*info;
 
-	info = "hidden";
-	fd = open(info, O_CREAT | O_RDWR | O_TRUNC, 0777);
-	if (fd == -1)
-		error_out("open");
-	write (fd, data, ft_strlen(data));
-	fd = open(info, O_RDONLY, 0777);
-	if (fd == -1)
-		error_out("open");
+	fd = writing_data(data);
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2");
 	if (dup2(fd, STDIN_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[3], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
 		path[i] = ft_strjoin_b(path[i], cmd[0]);
@@ -102,7 +94,8 @@ char	*get_data(char **argv)
 	char	*line;
 	char	*data;
 
-	data = malloc(BUFFER_SIZE);
+	data = malloc(1);
+	data[0] = '\0';
 	while (1)
 	{
 		write(1, "heredoc> ", 10);
@@ -110,7 +103,6 @@ char	*get_data(char **argv)
 		if (ft_strcmp_herdoc(line, argv[2]) == 0)
 			break ;
 		data = ft_strjoin(data, line);
-		// printf("%s\n", data);
 		free(line);
 	}
 	return (free(line), data);

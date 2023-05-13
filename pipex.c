@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_program.c                                     :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 22:47:54 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/04/30 19:37:29 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/13 15:28:31 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	command_search(char **path)
 		if (access(path[i], X_OK) == 0)
 			return (i);
 	}
-	return (-1);
+	perror("Command Not Found");
+	exit(EXIT_FAILURE);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -47,8 +48,8 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 	{
-		perror("expected args : ./pipex INfile cmd1 cmd2 OUTfile\n");
-		exit(1);
+		perror("expected args : ./pipex INfile cmd1 cmd2 OUTfile");
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -69,10 +70,10 @@ void	manage_child(char **argv, int *pipfd, char **env)
 	if (dup2(fd1, STDIN_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[2], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
-		path[i] = ft_strjoin(path[i], cmd[0]);
+		path[i] = ft_strjoin_b(path[i], cmd[0]);
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
@@ -96,10 +97,10 @@ void	manage_child2(char **argv, int *pipfd, char **env)
 	if (dup2(fd2, STDOUT_FILENO) < 0)
 		error_out("dup2");
 	cmd = ft_split(argv[3], ' ');
-	path = ft_split(env[6], ':');
+	path = find_path(env);
 	i = -1;
 	while (path[++i])
-		path[i] = ft_strjoin(path[i], cmd[0]);
+		path[i] = ft_strjoin_b(path[i], cmd[0]);
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)

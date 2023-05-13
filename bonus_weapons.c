@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools2.c                                           :+:      :+:    :+:   */
+/*   bonus_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/07 23:58:08 by aouhbi           ###   ########.fr       */
+/*   Created: 2023/05/13 15:15:44 by aouhbi            #+#    #+#             */
+/*   Updated: 2023/05/13 15:18:03 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
 #include "pipex_bonus.h"
 
 int	command_handler(int argc, char **argv, int *pipfd, char **env)
@@ -34,75 +33,6 @@ int	command_handler(int argc, char **argv, int *pipfd, char **env)
 	return (j);
 }
 
-char	*ft_strjoin_b(char *s1, char *s2)
-{
-	char	*ptr;
-	size_t	i;
-	size_t	j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	i = 0;
-	j = 0;
-	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 2);
-	if (!ptr)
-		return (0);
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	ptr[i++] = '/';
-	while (s2[j])
-	{
-		ptr[i] = s2[j];
-		i++;
-		j++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*ptr;
-	size_t	i;
-	size_t	j;
-
-	if (!s1 || !s2)
-		return (NULL);
-	i = 0;
-	j = 0;
-	ptr = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!ptr)
-		return (0);
-	while (s1[i])
-	{
-		ptr[i] = s1[i];
-		i++;
-	}
-	while (s2[j])
-	{
-		ptr[i] = s2[j];
-		i++;
-		j++;
-	}
-	ptr[i] = '\0';
-	return (ptr);
-}
-
-size_t	ft_strlen(char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
-}
-
 int	ft_strcmp_herdoc(char *s1, char *s2)
 {
 	size_t	i;
@@ -117,4 +47,10 @@ int	ft_strcmp_herdoc(char *s1, char *s2)
 		i++;
 	}
 	return (0);
+}
+
+void	error_out(char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
 }
