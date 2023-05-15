@@ -6,11 +6,11 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 01:31:52 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/11 01:08:04 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/15 14:17:32 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../include/pipex_bonus.h"
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

@@ -1,54 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_handling.c                                 :+:      :+:    :+:   */
+/*   bonus_weapons.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/13 14:31:49 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/13 15:03:05 by aouhbi           ###   ########.fr       */
+/*   Created: 2023/05/13 15:15:44 by aouhbi            #+#    #+#             */
+/*   Updated: 2023/05/15 14:16:36 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-#include "pipex.h"
+#include "../include/pipex_bonus.h"
 
-char	**find_path(char **env)
+int	command_handler(int argc, char **argv, int *pipfd, char **env)
 {
-	int		k;
-	char	**path;
+	int		cmd_n;
+	pid_t	pid_b;
+	int		j;
 
-	k = get_env_path(env);
-	path = ft_split(env[k], ':');
-	return (path);
-}
-
-int	get_env_path(char **env)
-{
-	char	*path;
-	int		i;
-
-	path = "PATH=";
-	i = 0;
-	while (ft_strncmp(path, env[i], 5) != 0)
+	cmd_n = argc - 5;
+	j = 3;
+	while (cmd_n > 0)
 	{
-		if (!env[i])
-			perror("The Command Path Does Not Exist!");
-		i++;
+		pid_b = fork();
+		if (pid_b == 0)
+			manage_children(argv, pipfd, env, j);
+		else
+			wait(0);
+		j++;
+		cmd_n--;
 	}
-	return (i);
+	return (j);
 }
 
-int	ft_strncmp(char *s1, char *s2, int n)
+int	ft_strcmp_herdoc(char *s1, char *s2)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (i < n && (s1[i] || s2[i]))
+	while (s1[i] || s2[i])
 	{
+		if (s1[i] == '\n')
+			break ;
 		if (s1[i] != s2[i])
 			return (s1[i] - s2[i]);
 		i++;
 	}
 	return (0);
+}
+
+void	error_out(char *msg)
+{
+	perror(msg);
+	exit(EXIT_FAILURE);
 }

@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools2.c                                           :+:      :+:    :+:   */
+/*   joining.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/13 15:16:05 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/15 14:17:09 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
-#include "pipex_bonus.h"
+#include "../include/pipex.h"
+#include "../include/pipex_bonus.h"
 
 char	*ft_strjoin_b(char *s1, char *s2)
 {

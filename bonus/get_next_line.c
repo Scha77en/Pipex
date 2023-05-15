@@ -6,11 +6,11 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/17 01:31:45 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/13 15:12:49 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/15 14:17:35 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../include/pipex_bonus.h"
 
 char	*get_next_line(int fd)
 {

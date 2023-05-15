@@ -1,23 +1,21 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/04/19 22:50:02 by aouhbi            #+#    #+#              #
-#    Updated: 2023/05/13 15:22:16 by aouhbi           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SOURCE = ./src
+OBJECTS = ./obj
+INCLUDE = ./include
+SOURCE_BONUS = ./bonus
+OBJECTS_BONUS = ./obj_bonus
 
-SRC = pipex.c spliting.c joining.c command_handling.c
+SRC =  pipex.c spliting.c joining.c command_handling.c
 
-B_SRC = pipex_bonus.c bonus_tools.c command_handling.c file_handling.c get_next_line.c \
+OBJ = ${addprefix ${OBJECTS}/, ${SRC:.c=.o}}
+
+SRC_BONUS = pipex_bonus.c bonus_tools.c command_handling.c file_handling.c get_next_line.c \
 		get_next_line_utils.c spliting.c joining.c bonus_weapons.c
 
-OBJ = ${SRC:.c=.o}
+OBJ_BONUS = ${addprefix ${OBJECTS_BONUS}/, ${SRC_BONUS:.c=.o}}
 
-B_OBJ = ${B_SRC:.c=.o}
+NAME = pipex
+
+NAME_BONUS = pipex_bonus
 
 CC = cc
 
@@ -25,29 +23,29 @@ FLAGS = -Wall -Wextra -Werror
 
 RM = rm -rf
 
-NAME = pipex
-
-BONUS = pipex_bonus
-
 all : ${NAME}
 
+bonus : ${NAME_BONUS}
+
 ${NAME} : ${OBJ}
-	${CC} ${FLAGS} ${OBJ} -o ${NAME}
+	${CC} ${FLAGS} $^ -o ${NAME}
 
-${BONUS} : ${B_OBJ}
-	${CC} ${FLAGS} ${B_OBJ} -o $@
-
-%.o : %.c pipex.h
+${OBJECTS}/%.o : ${SOURCE}/%.c ${INCLUDE}/pipex.h
+	@mkdir -p ${dir $@}
 	${CC} ${FLAGS} -c $< -o $@
 
-%.o : %.c pipex_bonus.h
+${NAME_BONUS} : ${OBJ_BONUS}
+	${CC} ${FLAGS} ${OBJ_BONUS} -o $@
+
+${OBJECTS_BONUS}/%.o : ${SOURCE_BONUS}/%.c ${INCLUDE}/pipex_bonus.h
+	@mkdir -p ${dir $@}
 	${CC} ${FLAGS} -c $< -o $@
 
 clean :
-	${RM} ${OBJ} ${B_OBJ}
+	${RM} ${OBJECTS} ${OBJECTS_BONUS}
 
 fclean : clean
-	${RM} ${NAME} ${BONUS}
+	${RM} ${NAME} ${NAME_BONUS}
 
 re : fclean all
 
