@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 22:48:59 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/13 15:28:40 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 16:39:36 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
+# include <sys/wait.h>
 
 char	**ft_split(char *s, char c);
 char	*ft_strjoin(char *s1, char *s2);

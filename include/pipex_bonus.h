@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:13:03 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/13 14:42:31 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 16:39:47 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
+# include <sys/wait.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1337

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:17:41 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 17:11:58 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	main(int argc, char **argv, char **env)
 			manage_last_child(argv, pipfd, env, j);
 		else
 		{
-			wait(0);
+			waitpid(pid1, NULL, 0);
+			waitpid(pid2, NULL, 0);
 			close(pipfd[1]);
 			close(pipfd[0]);
 		}
