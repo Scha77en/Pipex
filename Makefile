@@ -17,7 +17,8 @@ NAME = pipex
 
 NAME_BONUS = pipex_bonus
 
-CC = cc -g -fsanitize=address
+CC = cc -g
+# -fsanitize=address
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -47,6 +48,6 @@ clean :
 fclean : clean
 	${RM} ${NAME} ${NAME_BONUS}
 
-re : fclean all
+re : fclean all bonus
 
 .PHONY : all clean fclean re

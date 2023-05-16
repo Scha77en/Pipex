@@ -3,17 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/16 21:39:33 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 22:22:27 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
 
+// void	leak()
+// {
+// 	system("leaks ./pipex_bonus");
+// }
+
 int	main(int argc, char **argv, char **env)
 {
+	// atexit(leak);
 	int		pipfd[2];
 	int		j;
 	pid_t	pid1;
