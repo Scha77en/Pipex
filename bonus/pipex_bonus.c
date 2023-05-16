@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/16 17:11:58 by Schatten         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:39:33 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc >= 5)
 	{
 		if (pipe(pipfd) == -1)
-			error_out("pipe");
+			error_out("pipe", 0);
 		if (ft_strcmp(argv[1], "here_doc") == 0)
 			here_doc_management(argc, argv, pipfd, env);
 		pid1 = fork();
@@ -34,12 +34,11 @@ int	main(int argc, char **argv, char **env)
 			manage_last_child(argv, pipfd, env, j);
 		else
 		{
-			waitpid(pid1, NULL, 0);
-			waitpid(pid2, NULL, 0);
-			close(pipfd[1]);
-			close(pipfd[0]);
+			waiting_und_closing(pid1, pid2, pipfd);
 		}
 	}
+	else
+		error_out("Not Enough Arguments", 1);
 }
 
 void	here_doc_management(int argc, char **argv, int *pipfd, char **env)
@@ -49,6 +48,8 @@ void	here_doc_management(int argc, char **argv, int *pipfd, char **env)
 	pid_t	pid1;
 	pid_t	pid2;
 
+	if (argc < 6)
+		error_out("Not enough argumrnts", 1);
 	data = get_data(argv);
 	pid1 = fork();
 	if (pid1 == 0)
@@ -76,12 +77,12 @@ void	manage_first_child(char **argv, int *pipfd, char **env)
 
 	fd1 = open(argv[1], O_RDONLY);
 	if (fd1 == -1)
-		error_out("open");
+		error_out("open", 0);
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	if (dup2(fd1, STDIN_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	cmd = ft_split(argv[2], ' ');
 	path = find_path(env);
 	i = -1;
@@ -90,7 +91,7 @@ void	manage_first_child(char **argv, int *pipfd, char **env)
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
-		error_out("execve");
+		error_out("execve", 0);
 }
 
 void	manage_children(char **argv, int *pipfd, char **env, int j)
@@ -101,9 +102,9 @@ void	manage_children(char **argv, int *pipfd, char **env, int j)
 	int		i;
 
 	if (dup2(pipfd[0], STDIN_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	cmd = ft_split(argv[j], ' ');
 	path = find_path(env);
 	i = -1;
@@ -112,7 +113,7 @@ void	manage_children(char **argv, int *pipfd, char **env, int j)
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
-		error_out("execve");
+		error_out("execve", 0);
 }
 
 void	manage_last_child(char **argv, int *pipfd, char **env, int j)
@@ -125,12 +126,12 @@ void	manage_last_child(char **argv, int *pipfd, char **env, int j)
 
 	fd2 = open(argv[j + 1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd2 == -1)
-		error_out("open");
+		error_out("open", 0);
 	close(pipfd[1]);
 	if (dup2(pipfd[0], STDIN_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	if (dup2(fd2, STDOUT_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	cmd = ft_split(argv[j], ' ');
 	path = find_path(env);
 	i = -1;
@@ -139,5 +140,5 @@ void	manage_last_child(char **argv, int *pipfd, char **env, int j)
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
-		error_out("execve");
+		error_out("execve", 0);
 }

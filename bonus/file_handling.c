@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 02:00:39 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:17:29 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:19:49 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	writing_data(char *data)
 	info = generate_file();
 	fd = open(info, O_CREAT | O_RDWR | O_TRUNC, 0777);
 	if (fd == -1)
-		error_out("open");
+		error_out("open", 0);
 	write (fd, data, ft_strlen(data));
 	close(fd);
 	fd = open(info, O_RDONLY, 0777);
 	if (fd == -1)
-		error_out("open");
+		error_out("open", 0);
 	if (unlink(info) == -1)
 		perror("Error deleting file");
 	return (fd);

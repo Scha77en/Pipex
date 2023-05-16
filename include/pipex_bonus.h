@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/29 13:13:03 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/16 16:39:47 by Schatten         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:37:28 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <string.h>
-# include <sys/wait.h>
+// # include <sys/wait.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1337
@@ -40,7 +40,7 @@ void	manage_first_child(char **argv, int *pipfd, char **env);
 void	manage_children(char **argv, int *pipfd, char **env, int j);
 void	manage_last_child(char **argv, int *pipfd, char **env, int j);
 int		command_search(char **path);
-void	error_out(char *msg);
+void	error_out(char *msg, int v);
 int		command_handler(int argc, char **argv, int *pipfd, char **env);
 void	here_doc_management(int argc, char **argv, int *pipfd, char **env);
 void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data);
@@ -63,5 +63,6 @@ char	*generate_file(void);
 char	**find_path(char **env);
 int		get_env_path(char **env);
 int		ft_strncmp(char *s1, char *s2, int n);
+void	waiting_und_closing(pid_t pid1, pid_t pid2, int *pipfd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:16:31 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:20:21 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	fd = writing_data(data);
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	if (dup2(fd, STDIN_FILENO) < 0)
-		error_out("dup2");
+		error_out("dup2", 0);
 	cmd = ft_split(argv[3], ' ');
 	path = find_path(env);
 	i = -1;
@@ -36,7 +36,7 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	if (ret == -1)
 	{
 		printf("ENTER\n");
-		error_out("execve");
+		error_out("execve", 0);
 	}
 }
 

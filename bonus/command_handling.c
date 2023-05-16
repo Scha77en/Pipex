@@ -6,12 +6,11 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:31:49 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:16:56 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:47:15 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex_bonus.h"
-#include "../include/pipex.h"
 
 char	**find_path(char **env)
 {

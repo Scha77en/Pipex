@@ -6,11 +6,10 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:57:50 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 23:17:09 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:38:25 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/pipex.h"
 #include "../include/pipex_bonus.h"
 
 char	*ft_strjoin_b(char *s1, char *s2)
@@ -82,4 +81,12 @@ size_t	ft_strlen(char *s)
 		i++;
 	}
 	return (i);
+}
+
+void	waiting_und_closing(pid_t pid1, pid_t pid2, int *pipfd)
+{
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	close(pipfd[1]);
+	close(pipfd[0]);
 }

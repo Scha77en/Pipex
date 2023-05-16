@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 15:15:44 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 23:24:26 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:17:01 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,11 @@ int	ft_strcmp_herdoc(char *s1, char *s2)
 	return (0);
 }
 
-void	error_out(char *msg)
+void	error_out(char *msg, int v)
 {
-	perror(msg);
+	if (v == 0)
+		perror(msg);
+	if (v == 1)
+		write(2, msg, ft_strlen(msg));
 	exit(EXIT_FAILURE);
 }

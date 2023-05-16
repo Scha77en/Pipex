@@ -3,6 +3,9 @@
 	"files.associations": {
 		"*.excalidraw": "json",
 		"*.excalidrawlib": "json",
-		"pipex.h": "c"
+		"pipex.h": "c",
+		"string.h": "c",
+		"fcntl.h": "c",
+		"stdio.h": "c"
 	}
 }

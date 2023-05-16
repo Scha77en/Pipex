@@ -6,12 +6,11 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 15:35:38 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:14:15 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 20:47:56 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/pipex.h"
-#include "../include/pipex_bonus.h"
 
 static int	rows_num(const char *str, char c)
 {

@@ -6,7 +6,7 @@
 /*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/19 22:47:54 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/15 14:14:10 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/16 21:24:32 by aouhbi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 	{
-		perror("expected args : ./pipex INfile cmd1 cmd2 OUTfile");
+		write(2, "[ Error ] expected args : ./pipex INfile cmd1 \
+cmd2 OUTfile\n", 57);
 		exit(EXIT_FAILURE);
 	}
 }
