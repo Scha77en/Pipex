@@ -17,7 +17,7 @@ NAME = pipex
 
 NAME_BONUS = pipex_bonus
 
-CC = cc
+CC = cc -g -fsanitize=address
 
 FLAGS = -Wall -Wextra -Werror
 
