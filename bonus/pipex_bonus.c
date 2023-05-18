@@ -6,7 +6,7 @@
 /*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:22:08 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/16 22:22:27 by Schatten         ###   ########.fr       */
+/*   Updated: 2023/05/18 05:04:23 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ void	manage_first_child(char **argv, int *pipfd, char **env)
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2", 0);
+	close(pipfd[1]);
 	if (dup2(fd1, STDIN_FILENO) < 0)
 		error_out("dup2", 0);
+	close(fd1);
 	cmd = ft_split(argv[2], ' ');
 	path = find_path(env);
 	i = -1;
@@ -109,8 +111,10 @@ void	manage_children(char **argv, int *pipfd, char **env, int j)
 
 	if (dup2(pipfd[0], STDIN_FILENO) < 0)
 		error_out("dup2", 0);
+	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2", 0);
+	close(pipfd[1]);
 	cmd = ft_split(argv[j], ' ');
 	path = find_path(env);
 	i = -1;
@@ -136,8 +140,10 @@ void	manage_last_child(char **argv, int *pipfd, char **env, int j)
 	close(pipfd[1]);
 	if (dup2(pipfd[0], STDIN_FILENO) < 0)
 		error_out("dup2", 0);
+	close(pipfd[0]);
 	if (dup2(fd2, STDOUT_FILENO) < 0)
 		error_out("dup2", 0);
+	close(fd2);
 	cmd = ft_split(argv[j], ' ');
 	path = find_path(env);
 	i = -1;

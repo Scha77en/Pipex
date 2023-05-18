@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bonus_tools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aouhbi <aouhbi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: Schatten <Schatten@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 15:30:47 by aouhbi            #+#    #+#             */
-/*   Updated: 2023/05/16 21:20:21 by aouhbi           ###   ########.fr       */
+/*   Updated: 2023/05/18 05:08:02 by Schatten         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	close(pipfd[0]);
 	if (dup2(pipfd[1], STDOUT_FILENO) < 0)
 		error_out("dup2", 0);
+	close(pipfd[1]);
 	if (dup2(fd, STDIN_FILENO) < 0)
 		error_out("dup2", 0);
+	close(fd);
 	cmd = ft_split(argv[3], ' ');
 	path = find_path(env);
 	i = -1;
@@ -34,10 +36,7 @@ void	manage_heredoc_first(char **argv, int *pipfd, char **env, char *data)
 	i = command_search(path);
 	ret = execve(path[i], cmd, env);
 	if (ret == -1)
-	{
-		printf("ENTER\n");
 		error_out("execve", 0);
-	}
 }
 
 int	command_handler_heredoc(int argc, char **argv, int *pipfd, char **env)
@@ -54,7 +53,7 @@ int	command_handler_heredoc(int argc, char **argv, int *pipfd, char **env)
 		if (pid_b == 0)
 			manage_children(argv, pipfd, env, j);
 		else
-			wait(0);
+			waitpid(pid_b, NULL, 0);
 		j++;
 		cmd_n--;
 	}
